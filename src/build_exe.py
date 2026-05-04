@@ -1,22 +1,40 @@
-#!/usr/bin/env python3
 """
-Build PyInstaller — Raman Plot|Match Builder
+================================================================================
+  Raman Plot|Match Builder — PyInstaller build script
+================================================================================
 
-Script Python multiplateforme pour générer l'exécutable.
-Fonctionne sur Windows, Linux et macOS.
+Cross-platform build helper for packaging the application into a standalone
+executable bundle (Windows .exe, Linux ELF, macOS .app).
 
-Usage :
-    python build_exe.py
+Usage
+-----
+1. Install PyInstaller in your Python environment:
+       pip install pyinstaller
 
-Pré-requis (à installer une fois) :
-    pip install customtkinter pyinstaller numpy scipy matplotlib
-    pip install pillow openpyxl reportlab
-    pip install tkinterdnd2     (optionnel : drag & drop)
-    pip install torch           (optionnel : CDAE/CBRAE)
+2. Place this file next to `raman_gui.py` (i.e. inside the `src/` folder of
+   the GitHub repository, or at the application root for development).
 
-Sortie :
-    dist/RamanPlotMatchBuilder/RamanPlotMatchBuilder(.exe)
+3. From that folder, run:
+       python build_exe.py
+
+The bundled application is produced under `dist/RamanPlotMatchBuilder/`,
+together with the runtime folders (`SAMPLES/`, `MODELS/`, `DATABASE_RRUFF/`,
+`PROJETS/`, `SAUVEGARDE/`, `Raw_Spectrum/`) — each containing a bilingual
+`README.txt` that tells the end-user what to put inside.
+
+NOTE on the deep-learning models and the RRUFF database
+-------------------------------------------------------
+The trained PyTorch checkpoints (`MODELS/cdae_best.pth`, `MODELS/cbrae_best.pth`)
+and the RRUFF reference database are NOT bundled by this script:
+  - the model checkpoints are large and have a separate distribution archive
+    (Zenodo — link in the thesis);
+  - the RRUFF database is licensed CC-BY by the RRUFF Project and must be
+    downloaded by the end-user from https://rruff.info.
+The corresponding folders (`MODELS/` and `DATABASE_RRUFF/`) are nevertheless
+created empty, with a README explaining where to obtain the assets.
+================================================================================
 """
+from __future__ import annotations
 
 import os
 import sys
@@ -24,262 +42,386 @@ import shutil
 import subprocess
 from pathlib import Path
 
+# ----------------------------------------------------------------------------
+# Configuration — edit these constants if you rename files or move things
+# ----------------------------------------------------------------------------
+HERE       = Path(__file__).parent
+APP_NAME   = "RamanPlotMatchBuilder"
+APP_VERSION = "1.0.0"
+MAIN_FILE  = HERE / "raman_gui.py"          # main entry point
+ICON_FILE  = HERE / "Raman_GUI.ico"         # optional; ignored if missing
 
-# ============================================================
-# Configuration du build
-# ============================================================
-APP_NAME = "RamanPlotMatchBuilder"
-ENTRY_POINT = "raman_gui.py"
-REQUIRED_FILES = ["raman_gui.py", "raman_db.py"]
-ICON_FILE = "Raman_GUI.ico"  # optionnel
-
-# Fichiers/dossiers de données à embarquer
-ADD_DATA = [
-    ("raman_db.py", "."),
+# Files that must be bundled INSIDE the .exe (read-only at runtime).
+# Format: (source path relative to HERE, destination relative to bundle root)
+BUNDLED_DATA: list[tuple[str, str]] = [
+    ("raman_db.py",   "."),
+    ("Raman_GUI.ico", "."),    # ignored if file does not exist
 ]
 
-# Packages dont on doit collecter les données (themes, fonts, ressources)
-COLLECT_DATA = [
-    "customtkinter",
-    "tkinterdnd2",
+# Folders that must be created NEXT TO the .exe (writable at runtime).
+# Each gets a small README.txt explaining its purpose to the end user.
+RUNTIME_DIRS: list[str] = [
+    "SAMPLES",
+    "Raw_Spectrum",
+    "DATABASE_RRUFF",
+    "MODELS",
+    "PROJETS",
+    "PROJETS/PlotBuilder",
+    "PROJETS/MatchSearch",
+    "SAUVEGARDE",
+    "SAUVEGARDE/Figures",
+    "SAUVEGARDE/Save CSV",
+    "SAUVEGARDE/Rapports",
 ]
 
-# Modules à importer explicitement (chargés dynamiquement, non détectés par
-# l'analyse statique de PyInstaller)
-HIDDEN_IMPORTS = [
-    "customtkinter",
-    "tkinterdnd2",
-    "scipy.signal",
-    "scipy.optimize",
-    "scipy.interpolate",
-    "scipy.sparse",
-    "scipy.sparse.linalg",
-    "matplotlib.backends.backend_tkagg",
-    "matplotlib.backends.backend_agg",
-    "PIL._tkinter_finder",
-    "openpyxl",
-    "reportlab",
-    "reportlab.pdfgen",
-    "reportlab.lib",
-    "reportlab.platypus",
-]
+# Bilingual READMEs (FR + EN) for each top-level runtime folder.
+# Sub-folders of PROJETS/ and SAUVEGARDE/ are auto-populated and don't need
+# their own README — the parent's README explains the role of the children.
+RUNTIME_READMES: dict[str, str] = {
 
-# Modules à exclure pour réduire la taille (jamais utilisés à runtime)
-EXCLUDE_MODULES = [
-    "pytest",
-    "IPython",
-    "jupyter",
-    "notebook",
-    "pylint",
-    "sphinx",
-]
+    # ------------------------------------------------------------------------
+    "SAMPLES": """\
+# SAMPLES/
+
+🇫🇷  Place ici les spectres expérimentaux que tu veux ouvrir avec
+    « Plot Builder ». Organise-les en sous-dossiers par échantillon :
+
+        SAMPLES/
+        ├── CR-G3-05/
+        │   ├── spec0001.txt
+        │   ├── spec0002.txt
+        │   └── ...
+        └── CR-G3-03/
+            └── ...
+
+    Chaque fichier .txt doit avoir 2 colonnes :
+      • colonne 1 : Raman shift (cm⁻¹)
+      • colonne 2 : intensité (u.a.)
+    Les lignes commençant par '#' sont ignorées.
+
+🇬🇧  Drop here the experimental spectra you want to open with
+    “Plot Builder”. Organize them in subfolders, one per sample:
+
+        SAMPLES/
+        ├── CR-G3-05/
+        │   ├── spec0001.txt
+        │   ├── spec0002.txt
+        │   └── ...
+        └── CR-G3-03/
+            └── ...
+
+    Each .txt file must be 2-column ASCII:
+      • column 1: Raman shift (cm⁻¹)
+      • column 2: intensity (a.u.)
+    Lines starting with '#' are ignored.
+""",
+
+    # ------------------------------------------------------------------------
+    "Raw_Spectrum": """\
+# Raw_Spectrum/
+
+🇫🇷  Place ici les spectres BRUTS à pré-traiter avec « Match Search »
+    (débruitage CDAE, baseline CBRAE/AsLS/Polynomial/SNIP, fit des pics,
+    identification automatique).
+
+    L'arborescence est libre — tu peux organiser par sample, par session,
+    par date :
+
+        Raw_Spectrum/
+        ├── CR-G3-05/
+        │   └── 22042026/
+        │       ├── spec0001.txt
+        │       └── ...
+        └── ma_session_du_jour/
+            └── ...
+
+    Format : .txt 2 colonnes (Raman shift, intensité), comme SAMPLES/.
+
+🇬🇧  Drop here the RAW spectra to preprocess with “Match Search”
+    (CDAE denoising, CBRAE/AsLS/Polynomial/SNIP baseline, peak fitting,
+    auto identification).
+
+    Free folder layout — organize by sample, session, or date:
+
+        Raw_Spectrum/
+        ├── CR-G3-05/
+        │   └── 22042026/
+        │       ├── spec0001.txt
+        │       └── ...
+        └── todays_session/
+            └── ...
+
+    Format: 2-column .txt (Raman shift, intensity), same as SAMPLES/.
+""",
+
+    # ------------------------------------------------------------------------
+    "DATABASE_RRUFF": """\
+# DATABASE_RRUFF/
+
+🇫🇷  Place ici la bibliothèque RRUFF de spectres de référence.
+
+    Le sous-ensemble recommandé est « Raman — Excellent (Oriented or
+    Unoriented) », téléchargeable gratuitement depuis :
+
+        https://rruff.info/zipped_data_files/raman/
+
+    Décompresse l'archive et organise les fichiers en sous-dossiers PAR
+    MINÉRAL, en suivant la convention « NomMineral_Rxxxxxx.txt » :
+
+        DATABASE_RRUFF/
+        ├── Anatase/
+        │   ├── Anatase__R070582.txt
+        │   ├── Anatase__R060277.txt
+        │   └── ...
+        ├── Hematite/
+        │   └── ...
+        └── ...
+
+    L'application scanne automatiquement la structure au démarrage.
+
+    ⚠ La base RRUFF n'est PAS distribuée avec l'application : elle est
+    sous licence CC-BY et appartient au projet RRUFF.
+
+🇬🇧  Drop here the RRUFF reference spectrum library.
+
+    The recommended subset is “Raman — Excellent (Oriented or Unoriented)”,
+    freely downloadable from:
+
+        https://rruff.info/zipped_data_files/raman/
+
+    Unzip the archive and organize the files in PER-MINERAL subfolders,
+    following the “MineralName_Rxxxxxx.txt” naming convention:
+
+        DATABASE_RRUFF/
+        ├── Anatase/
+        │   ├── Anatase__R070582.txt
+        │   ├── Anatase__R060277.txt
+        │   └── ...
+        ├── Hematite/
+        │   └── ...
+        └── ...
+
+    The application scans the folder structure automatically at startup.
+
+    ⚠ The RRUFF database is NOT distributed with the application: it is
+    licensed CC-BY and belongs to the RRUFF Project.
+""",
+
+    # ------------------------------------------------------------------------
+    "MODELS": """\
+# MODELS/
+
+🇫🇷  Place ici les checkpoints PyTorch des modèles deep-learning utilisés
+    par « Match Search » :
+
+        MODELS/
+        ├── cdae_best.pth      ← Convolutional Denoising AutoEncoder
+        └── cbrae_best.pth     ← Convolutional Baseline Removal AE
+
+    Ces fichiers sont publiés dans l'archive de la thèse de master
+    associée (Zenodo — lien à venir).
+
+    Sans ces fichiers, l'application fonctionne quand même : les modules
+    CDAE / CBRAE seront simplement désactivés. Les algorithmes classiques
+    AsLS, Polynomial et SNIP restent pleinement utilisables.
+
+🇬🇧  Drop here the PyTorch checkpoints for the deep-learning models used
+    by “Match Search”:
+
+        MODELS/
+        ├── cdae_best.pth      ← Convolutional Denoising AutoEncoder
+        └── cbrae_best.pth     ← Convolutional Baseline Removal AE
+
+    These files are published in the companion master's thesis archive
+    (Zenodo — link forthcoming).
+
+    Without them, the application still runs: the CDAE / CBRAE buttons
+    are simply disabled. The classical AsLS, Polynomial and SNIP
+    algorithms remain fully functional.
+""",
+
+    # ------------------------------------------------------------------------
+    "PROJETS": """\
+# PROJETS/
+
+🇫🇷  Ce dossier reçoit AUTOMATIQUEMENT les projets que tu sauvegardes
+    depuis l'application :
+
+        PROJETS/
+        ├── PlotBuilder/       ← fichiers .rpm  (Plot Builder)
+        └── MatchSearch/       ← fichiers .rms  (Match Search)
+
+    Chaque projet est un fichier JSON qui restaure intégralement l'état
+    de la session : spectres ouverts, prétraitements appliqués, pics
+    fittés, références RRUFF chargées, notes utilisateur, position du
+    zoom, thème, etc.
+
+    Tu peux copier librement ces fichiers entre machines : ils sont
+    autonomes (les chemins de spectres sont relatifs au dossier
+    Raw_Spectrum/ ou SAMPLES/ correspondant).
+
+🇬🇧  This folder AUTOMATICALLY receives the projects you save from the
+    application:
+
+        PROJETS/
+        ├── PlotBuilder/       ← .rpm files  (Plot Builder)
+        └── MatchSearch/       ← .rms files  (Match Search)
+
+    Each project is a JSON file that fully restores a session state:
+    open spectra, applied preprocessing, fitted peaks, loaded RRUFF
+    references, user notes, zoom position, theme, etc.
+
+    You can freely copy these files between machines: they are
+    self-contained (spectrum paths are relative to the corresponding
+    Raw_Spectrum/ or SAMPLES/ folder).
+""",
+
+    # ------------------------------------------------------------------------
+    "SAUVEGARDE": """\
+# SAUVEGARDE/
+
+🇫🇷  Dossier d'EXPORT (pas de chargement). Trois sous-dossiers seront
+    créés au fur et à mesure de tes exports :
+
+        SAUVEGARDE/
+        ├── Figures/        ← exports PNG / PDF / SVG (bouton SAUVEGARDER)
+        ├── Save CSV/       ← exports Excel multi-onglets (.xlsx)
+        └── Rapports/       ← rapports PDF multi-pages (auto-générés)
+
+    Tu peux supprimer ce dossier à tout moment, l'application le
+    recréera lors du prochain export.
+
+🇬🇧  EXPORT folder (no loading from here). Three subfolders are populated
+    as you export from the application:
+
+        SAUVEGARDE/
+        ├── Figures/        ← PNG / PDF / SVG exports (SAVE button)
+        ├── Save CSV/       ← multi-tab Excel exports (.xlsx)
+        └── Rapports/       ← multi-page PDF reports (auto-generated)
+
+    Feel free to delete this folder at any time — the application will
+    recreate it on the next export.
+""",
+}
 
 
-# ============================================================
-# Fonctions utilitaires
-# ============================================================
-# Codes ANSI pour la couleur (fonctionnent sur Linux/macOS et Windows 10+)
-class Color:
-    RESET = "\033[0m"
-    BOLD = "\033[1m"
-    GREEN = "\033[32m"
-    YELLOW = "\033[33m"
-    RED = "\033[31m"
-    CYAN = "\033[36m"
-
-
-def cprint(msg, color=""):
-    """Print avec couleur (fallback gracieux si terminal sans couleur)."""
-    print(f"{color}{msg}{Color.RESET}")
-
-
-def section(title):
-    """Affiche un titre de section bien visible."""
-    bar = "=" * 60
-    cprint(f"\n{bar}", Color.CYAN)
-    cprint(f"  {title}", Color.BOLD + Color.CYAN)
-    cprint(bar, Color.CYAN)
-
-
-def check_prerequisites():
-    """Vérifie que les fichiers requis et PyInstaller sont disponibles."""
-    section("Vérification des prérequis")
-
-    # 1. Fichiers source obligatoires
-    missing = [f for f in REQUIRED_FILES if not Path(f).is_file()]
-    if missing:
-        cprint(f"✕ ERREUR : fichier(s) manquant(s) : {', '.join(missing)}",
-               Color.RED)
-        cprint("  Lance ce script depuis le dossier qui contient "
-               f"{', '.join(REQUIRED_FILES)}", Color.RED)
-        return False
-    cprint(f"✓ Fichiers source présents : {', '.join(REQUIRED_FILES)}",
-           Color.GREEN)
-
-    # 2. Icône (optionnelle)
-    if Path(ICON_FILE).is_file():
-        cprint(f"✓ Icône détectée : {ICON_FILE}", Color.GREEN)
-    else:
-        cprint(f"ℹ Icône {ICON_FILE} introuvable — exe sans icône custom.",
-               Color.YELLOW)
-
-    # 3. PyInstaller installé ?
-    try:
-        result = subprocess.run(
-            [sys.executable, "-m", "PyInstaller", "--version"],
-            capture_output=True, text=True, timeout=30,
-        )
-        if result.returncode == 0:
-            version = result.stdout.strip()
-            cprint(f"✓ PyInstaller installé (version {version})",
-                   Color.GREEN)
+# ----------------------------------------------------------------------------
+# Build logic
+# ----------------------------------------------------------------------------
+def _clean_previous_build() -> None:
+    """Remove leftover build artifacts from previous runs."""
+    for d in ("build", "dist", f"{APP_NAME}.spec"):
+        p = HERE / d
+        if not p.exists():
+            continue
+        if p.is_dir():
+            print(f"  • removing {p}")
+            shutil.rmtree(p)
         else:
-            raise FileNotFoundError("PyInstaller non disponible")
-    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
-        cprint("✕ ERREUR : PyInstaller n'est pas installé.", Color.RED)
-        cprint("  Installe-le avec : pip install pyinstaller", Color.RED)
-        return False
-
-    return True
+            print(f"  • removing {p}")
+            p.unlink()
 
 
-def cleanup_old_builds():
-    """Supprime les anciens dossiers build/ et dist/."""
-    section("Nettoyage des anciens builds")
-    for folder in ["build", "dist"]:
-        path = Path(folder)
-        if path.exists():
-            cprint(f"  Suppression de {folder}/...", Color.YELLOW)
-            shutil.rmtree(path)
-    cprint("✓ Nettoyage terminé", Color.GREEN)
-
-
-def build_pyinstaller_command():
-    """Construit la liste d'arguments pour PyInstaller."""
-    cmd = [
-        sys.executable, "-m", "PyInstaller",
-        "--noconfirm",
-        "--onedir",       # produit un dossier (plus rapide à lancer
-                            # qu'onefile) ; tu peux passer à --onefile
-                            # si tu veux un exe unique mais lent
-        "--windowed",     # pas de console (Tk app)
+def _build_pyinstaller_command() -> list[str]:
+    """Construct the PyInstaller CLI command."""
+    cmd: list[str] = [
+        "pyinstaller",
         "--name", APP_NAME,
+        "--windowed",                       # no console window
+        "--onedir",                         # bundle in a folder (faster startup
+                                            # than --onefile, mandatory if you
+                                            # ship the runtime folders next to
+                                            # the .exe)
+        "--clean",
+        "--noconfirm",
+        # CTk and matplotlib have non-Python assets that need bundling
+        "--collect-all",        "customtkinter",
+        "--collect-submodules", "matplotlib",
+        # Hidden imports that PyInstaller may miss
+        "--hidden-import", "scipy.signal",
+        "--hidden-import", "PIL.Image",
+        "--hidden-import", "openpyxl",
     ]
 
-    # Icône
-    if Path(ICON_FILE).is_file():
-        cmd += ["--icon", ICON_FILE]
+    # Icon — optional, only added if file exists
+    if ICON_FILE.exists():
+        cmd.append(f"--icon={ICON_FILE}")
 
-    # Datas embarquées : sur Windows le séparateur est ';',
-    # sur Linux/macOS c'est ':'
-    sep = ";" if sys.platform == "win32" else ":"
-    for src, dst in ADD_DATA:
-        cmd += ["--add-data", f"{src}{sep}{dst}"]
+    # Bundled data files
+    for src, dst in BUNDLED_DATA:
+        src_path = HERE / src
+        if src_path.exists():
+            sep = ";" if sys.platform == "win32" else ":"
+            cmd.append(f"--add-data={src_path}{sep}{dst}")
 
-    # Collect datas des packages (themes, fonts, etc.)
-    for pkg in COLLECT_DATA:
-        cmd += ["--collect-data", pkg]
-
-    # Hidden imports
-    for mod in HIDDEN_IMPORTS:
-        cmd += ["--hidden-import", mod]
-
-    # Excludes
-    for mod in EXCLUDE_MODULES:
-        cmd += ["--exclude-module", mod]
-
-    # Point d'entrée
-    cmd.append(ENTRY_POINT)
+    cmd.append(str(MAIN_FILE))
     return cmd
 
 
-def run_build():
-    """Lance PyInstaller et affiche sa sortie en temps réel."""
-    section("Lancement de PyInstaller (~3-10 minutes)")
-    cmd = build_pyinstaller_command()
+def _create_runtime_folders(out_dir: Path) -> None:
+    """Create the runtime folder layout next to the bundled executable
+    and drop a bilingual README.txt in each top-level folder."""
+    print(f"\n→ Creating runtime folders inside {out_dir}/")
+    for rel in RUNTIME_DIRS:
+        target = out_dir / rel
+        target.mkdir(parents=True, exist_ok=True)
+        print(f"  • {target}")
 
-    # Affichage de la commande pour debug
-    cprint("Commande exécutée :", Color.CYAN)
-    cprint("  " + " ".join(cmd) + "\n")
-
-    try:
-        # On laisse PyInstaller écrire directement dans le terminal
-        # pour voir la progression en temps réel
-        result = subprocess.run(cmd)
-        return result.returncode == 0
-    except KeyboardInterrupt:
-        cprint("\n✕ Build interrompu par l'utilisateur.", Color.RED)
-        return False
-    except Exception as e:
-        cprint(f"\n✕ Erreur pendant le build : {e}", Color.RED)
-        return False
+    print(f"\n→ Writing bilingual README.txt in top-level runtime folders")
+    for folder, content in RUNTIME_READMES.items():
+        readme_path = out_dir / folder / "README.txt"
+        readme_path.write_text(content, encoding="utf-8")
+        print(f"  • {readme_path}")
 
 
-def verify_output():
-    """Vérifie que l'exe a bien été produit et affiche son emplacement."""
-    section("Vérification du résultat")
-
-    # Chemin de l'exe selon la plateforme
-    exe_name = f"{APP_NAME}.exe" if sys.platform == "win32" else APP_NAME
-    exe_path = Path("dist") / APP_NAME / exe_name
-
-    if exe_path.is_file():
-        # Calculer la taille du dossier dist/<APP_NAME>/
-        dist_folder = Path("dist") / APP_NAME
-        total_size = sum(f.stat().st_size for f in dist_folder.rglob("*")
-                            if f.is_file())
-        size_mb = total_size / (1024 * 1024)
-
-        cprint(f"✓ BUILD RÉUSSI", Color.BOLD + Color.GREEN)
-        cprint(f"\nExécutable : {exe_path}", Color.GREEN)
-        cprint(f"Taille totale du dossier : {size_mb:.1f} MB", Color.GREEN)
-        cprint(f"\nPour distribuer : zip tout le dossier {dist_folder}/",
-               Color.CYAN)
-        cprint(f"Pour tester localement : lance {exe_path}", Color.CYAN)
-        return True
-    else:
-        cprint(f"✕ BUILD ÉCHOUÉ", Color.BOLD + Color.RED)
-        cprint(f"Fichier attendu introuvable : {exe_path}", Color.RED)
-        cprint("Vérifie les messages d'erreur de PyInstaller ci-dessus.",
-               Color.RED)
-        return False
+def _print_summary(out_dir: Path) -> None:
+    print("\n" + "=" * 78)
+    print(f"  ✓ Build successful — {APP_NAME} v{APP_VERSION}")
+    print("=" * 78)
+    print(f"  Bundle directory : {out_dir}")
+    exe_name = APP_NAME + (".exe" if sys.platform == "win32" else "")
+    exe_path = out_dir / exe_name
+    if exe_path.exists():
+        size_mb = exe_path.stat().st_size / (1024 * 1024)
+        print(f"  Executable       : {exe_path} ({size_mb:.1f} MB)")
+    print(f"  Runtime folders  : {len(RUNTIME_DIRS)} folders created with README")
+    print("\n  Next steps:")
+    print(f"    1. Open {out_dir} and double-click {exe_name}")
+    print(f"    2. Read the README.txt in each runtime folder for setup hints")
+    print(f"    3. Drop your spectra in SAMPLES/ or Raw_Spectrum/")
+    print(f"    4. (Optional) Drop the trained models in MODELS/")
+    print(f"    5. (Optional) Drop the RRUFF library in DATABASE_RRUFF/")
+    print()
 
 
-# ============================================================
-# Main
-# ============================================================
-def main():
-    # Activer la couleur sur Windows 10+ (sinon les codes ANSI s'affichent
-    # comme du texte brut)
-    if sys.platform == "win32":
-        try:
-            os.system("")  # active le mode VT100 dans le terminal Windows
-        except Exception:
-            pass
+def build() -> None:
+    print(f"Raman Plot|Match Builder — build script v{APP_VERSION}")
+    print("-" * 78)
 
-    cprint("\n" + "=" * 60, Color.CYAN)
-    cprint(f"  Raman Plot|Match Builder — build PyInstaller",
-           Color.BOLD + Color.CYAN)
-    cprint("=" * 60, Color.CYAN)
-
-    # 1. Vérifier les prérequis
-    if not check_prerequisites():
+    if not MAIN_FILE.exists():
+        print(f"✗ ERROR: main file not found at {MAIN_FILE}")
+        print(f"  Make sure {MAIN_FILE.name} is in the same folder as build_exe.py")
         sys.exit(1)
 
-    # 2. Nettoyer les anciens builds
-    cleanup_old_builds()
+    print("→ Cleaning previous build artifacts")
+    _clean_previous_build()
 
-    # 3. Lancer le build
-    if not run_build():
-        cprint("\n✕ Le build PyInstaller a échoué.", Color.RED)
+    print("\n→ Running PyInstaller")
+    cmd = _build_pyinstaller_command()
+    print("  Command:", " ".join(cmd))
+    result = subprocess.run(cmd, cwd=HERE)
+    if result.returncode != 0:
+        print(f"\n✗ PyInstaller failed (exit code {result.returncode})")
+        sys.exit(result.returncode)
+
+    out_dir = HERE / "dist" / APP_NAME
+    if not out_dir.is_dir():
+        print(f"\n✗ Expected output folder not found: {out_dir}")
         sys.exit(1)
 
-    # 4. Vérifier le résultat
-    if not verify_output():
-        sys.exit(1)
-
-    cprint("\n✓ Tout est OK ! 🎯\n", Color.BOLD + Color.GREEN)
+    _create_runtime_folders(out_dir)
+    _print_summary(out_dir)
 
 
 if __name__ == "__main__":
-    main()
+    build()
