@@ -66,6 +66,12 @@ of the published analysis.
 
 ---
 
+## 📄 PDF reports
+
+> *Example reports in [`docs/Report PDF/`](docs/Report_PDF/)
+
+---
+
 ## 🚀 Quick start
 
 ### Installation from source
