@@ -327,6 +327,7 @@ Voir [`AI_USAGE.md`](AI_USAGE.md) pour la divulgation complète.
 
 📧 [bvfauconnier@gmail.com](mailto:bvfauconnier@gmail.com)
 🐙 [github.com/bvfauconnier](https://github.com/bvfauconnier)
+👤 [LinkedIn](https://www.linkedin.com/in/basile-vladimir-fauconnier-b716ba223/)
 
 ---
 
