@@ -322,7 +322,9 @@ Mémoire de master en Astrobiologie — Université de Sherbrooke (UdeS)
 - **Projet RRUFF** — pour la base ouverte de spectres Raman de référence
   ([rruff.info](https://rruff.info))
 - **Université de Liège** — Département d'Astrophysique, de Géophysique et d'Océanographie
-- **Université de Sherbrooke** — Département de Géomatiques Appliquées — Equipe T-Mars
+- **Université de Sherbrooke** — Département de Géomatiques Appliquées — Équipe T-Mars
+- **Promoteur** — Pr. Myriam Lemelin (UdeS) — Département de Géomatiques Appliquées — Équipe T-Mars
+- **Co-Promoteur** — Pr. Bernard Charlier (ULiège) — Département de Géologie
 
 ---
 
