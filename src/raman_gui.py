@@ -2104,7 +2104,7 @@ def parse_float_or_none(s):
 # Identité de l'application
 # ================================================================
 APP_NAME    = "Raman Plot|Match Builder"
-APP_VERSION = "0.9.0-beta"
+APP_VERSION = "1.0.0"
 APP_AUTHOR  = "Ir. Basile-Vladimir Fauconnier — bvfauconnier@gmail.com"
 
 
