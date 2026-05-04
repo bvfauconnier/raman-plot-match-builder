@@ -311,6 +311,7 @@ See [`AI_USAGE.md`](AI_USAGE.md) for the full disclosure.
 ## 👤 Author
 
 **Ir. Basile-Vladimir Fauconnier**
+ - Bio Engineer in Environmental Sciences and Technologies from Agro-Bio Tech Gembloux ULiège 
  - Master in Space Sciences — Université de Liège (ULiège)
  - Master's thesis in Astrobiology — Université de Sherbrooke (UdeS)
 
