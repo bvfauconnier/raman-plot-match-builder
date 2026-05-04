@@ -46,7 +46,7 @@ of the published analysis.
 
 | Match Search — main view                      | Match Search — fit window                       |
 |-----------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/match_search_fitwindow.png` | `docs/screenshots/match_search_fitwindow.png`   |
+| `docs/screenshots/match_search_main.png` | `docs/screenshots/match_search_fitwindow.png`   |
 
 | Auto-identification results                   | PDF report (excerpt)                            |
 |-----------------------------------------------|-------------------------------------------------|
