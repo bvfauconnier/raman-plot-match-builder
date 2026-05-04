@@ -7,6 +7,7 @@ Recommended captures (≈ 1200 × 800 px each, light theme for clarity):
 
 | File name                       | What to capture                                              |
 |---------------------------------|--------------------------------------------------------------|
+|`rpmb_welcome.png`               | Welcome page of the App                                      |  
 | `plot_builder_main.png`         | Plot Builder main view with 2–3 spectra and annotated peaks  |
 | `match_search_main.png`         | Match Search with 2–3 tabs open and the tree on the left     |
 | `match_search_fitwindow.png`    | A Fit window showing peak fitting + match analysis           |
