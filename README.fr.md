@@ -321,8 +321,9 @@ Voir [`AI_USAGE.md`](AI_USAGE.md) pour la divulgation complète.
 ## 👤 Auteur
 
 **Ir. Basile-Vladimir Fauconnier**
-Master en Sciences Spatiales — Université de Liège (ULiège)
-Mémoire de master en Astrobiologie — Université de Sherbrooke (UdeS)
+ - Bio Ingénieur en Sciences et Technologie de l'Environnement de l'Agro-Bio Tech de Gembloux ULiège 
+ - Master en Sciences Spatiales — Université de Liège (ULiège)
+ - Mémoire de master en Astrobiologie — Université de Sherbrooke (UdeS)
 
 📧 [bvfauconnier@gmail.com](mailto:bvfauconnier@gmail.com)
 🐙 [github.com/bvfauconnier](https://github.com/bvfauconnier)
