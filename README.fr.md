@@ -47,7 +47,7 @@ reproductibilité de l'analyse publiée.
 
 | Match Search — Fenêtre principale               | Match Search — Fenêtre du Fit                 |
 |-----------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/match_search_fitwindow.png` | `docs/screenshots/match_search_fitwindow.png`   |
+| `docs/screenshots/match_search_main.png` | `docs/screenshots/match_search_fitwindow.png`   |
 
 | Résultats de l'identification AUTO            | Rapport sous forme PDF                          |
 |-----------------------------------------------|-------------------------------------------------|
