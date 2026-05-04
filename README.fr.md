@@ -41,13 +41,17 @@ reproductibilité de l'analyse publiée.
 > *Captures à ajouter dans [`docs/screenshots/`](docs/screenshots/) — voir
 > la section [Captures](#-captures) de ce README pour les vues recommandées.*
 
-| Plot Builder — vue principale             | Match Search — fenêtre de fit                   |
-|-------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/plot_builder_main.png`  | `docs/screenshots/match_search_fitwindow.png`   |
+| Welcome — Fenêtre principale                  | Plot Builder — Fenêtre principale               |
+|-----------------------------------------------|-------------------------------------------------|
+| `docs/screenshots/plot_builder_welc.png`      | `docs/screenshots/plot_builder_main.png`        |
 
-| Identification automatique                | Rapport PDF (extrait)                           |
-|-------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/auto_identify.png`      | `docs/screenshots/pdf_report.png`               |
+| Match Search — Fenêtre principale               | Match Search — Fenêtre du Fit                 |
+|-----------------------------------------------|-------------------------------------------------|
+| `docs/screenshots/match_search_fitwindow.png` | `docs/screenshots/match_search_fitwindow.png`   |
+
+| Résultats de l'identification AUTO            | Rapport sous forme PDF                          |
+|-----------------------------------------------|-------------------------------------------------|
+| `docs/screenshots/auto_identify.png`          | `docs/screenshots/pdf_report.png`               |
 
 ---
 
