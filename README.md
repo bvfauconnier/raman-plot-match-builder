@@ -40,17 +40,29 @@ of the published analysis.
 > the section [Screenshots](#-screenshots-1) of this README for the recommended
 > captures to take.*
 
-| Welcome — main view                           | Plot Builder — main view                        |
-|-----------------------------------------------|-------------------------------------------------|
-| ![Welcome — main view](https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/rpmb_welcome.png)`docs/screenshots/rpmb_welcome.png`           | `docs/screenshots/plot_builder_main.png`        |
+| Welcome — main view                           |
+|-----------------------------------------------|
+| ![Welcome — main view](https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/rpmb_welcome.png) |
 
-| Match Search — main view                      | Match Search — fit window                       |
-|-----------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/match_search_main.png` | `docs/screenshots/match_search_fitwindow.png`   |
+| Plot Builder — main view                      |
+|-----------------------------------------------|
+| ![Welcome — main view](https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/plot_builder_main.png) |
 
-| Auto-identification results                   | PDF report (excerpt)                            |
-|-----------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/auto_identify.png`          | `docs/screenshots/pdf_report.png`               |
+| Match Search — main view                      |
+|-----------------------------------------------|
+| ![Welcome — main view](https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/match_search_main.png) |
+
+| Match Search — fit window                     |
+|-----------------------------------------------|
+| ![Welcome — main view](https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/match_search_fitwindow.png) |
+
+| Auto-identification results                   |
+|-----------------------------------------------|
+| ![Welcome — main view](https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/auto_identify.png) |
+
+| PDF report (excerpt)                          |
+|-----------------------------------------------|
+| ![Welcome — main view](https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/pdf_report.png) |
 
 ---
 
