@@ -40,13 +40,17 @@ of the published analysis.
 > the section [Screenshots](#-screenshots-1) of this README for the recommended
 > captures to take.*
 
-| Plot Builder — main view                  | Match Search — fit window                       |
-|-------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/plot_builder_main.png`  | `docs/screenshots/match_search_fitwindow.png`   |
+| Welcome — main view                           | Plot Builder — main view                        |
+|-----------------------------------------------|-------------------------------------------------|
+| `docs/screenshots/plot_builder_welc.png`      | `docs/screenshots/plot_builder_main.png`        |
 
-| Auto-identification results               | PDF report (excerpt)                            |
-|-------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/auto_identify.png`      | `docs/screenshots/pdf_report.png`               |
+| Match Search — main view                      | Match Search — fit window                       |
+|-----------------------------------------------|-------------------------------------------------|
+| `docs/screenshots/match_search_fitwindow.png` | `docs/screenshots/match_search_fitwindow.png`   |
+
+| Auto-identification results                   | PDF report (excerpt)                            |
+|-----------------------------------------------|-------------------------------------------------|
+| `docs/screenshots/auto_identify.png`          | `docs/screenshots/pdf_report.png`               |
 
 ---
 
