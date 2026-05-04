@@ -42,7 +42,7 @@ of the published analysis.
 
 | Welcome — main view                           | Plot Builder — main view                        |
 |-----------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/plot_builder_welc.png`      | `docs/screenshots/plot_builder_main.png`        |
+| `docs/screenshots/rpmb_welcome.png`           | `docs/screenshots/plot_builder_main.png`        |
 
 | Match Search — main view                      | Match Search — fit window                       |
 |-----------------------------------------------|-------------------------------------------------|
