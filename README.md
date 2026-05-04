@@ -68,7 +68,7 @@ of the published analysis.
 
 ## 📄 PDF reports
 
-> *Example reports in [`docs/Report PDF/`](docs/Report_PDF/)
+> *Example reports in [`docs/Report PDF/`](docs/Report PDF)
 
 ---
 
