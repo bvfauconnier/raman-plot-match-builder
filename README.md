@@ -323,8 +323,10 @@ Master's thesis in Astrobiology — Université de Sherbrooke (UdeS)
 
 - **RRUFF Project** — for the open Raman reference database
   ([rruff.info](https://rruff.info))
-- **Université de Liège** — Department of Astrophysics, Geophysics & Oceanography
-- **Université de Sherbrooke** — Departement of Applied Geomatics — T-Mars Team
+- **Université de Liège (Uliège)** — Department of Astrophysics, Geophysics & Oceanography
+- **Université de Sherbrooke (UdeS)** — Department of Applied Geomatics — T-Mars Team
+- **Promoter** — Pr. Myriam Lemelin (UdeS) — Department of Applied Geomatics — T-Mars Team
+- **Co-Promoter** — Pr. Bernard Charlier (ULiège) — Département of Geology
 
 ---
 
