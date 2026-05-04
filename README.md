@@ -62,7 +62,7 @@ of the published analysis.
 
 | PDF report (excerpt)                          |
 |-----------------------------------------------|
-| ![Example Report using Match Search Module]([https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/pdf_report.png](https://github.com/bvfauconnier/raman-plot-match-builder/blob/105897b608f0d0ef75e016b0afbb78af125665a3/docs/Report%20PDF/Spec0093%20%E2%80%94%20Clean%20%5BCDAE%2BCBRAE%5D%20%E2%80%94%20CR-G3-05_25022026_20260430_000246.pdf)) |
+| ![Welcome — main view](https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/pdf_report.png) |
 
 ---
 
