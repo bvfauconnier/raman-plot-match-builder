@@ -43,7 +43,7 @@ reproductibilité de l'analyse publiée.
 
 | Welcome — Fenêtre principale                  | Plot Builder — Fenêtre principale               |
 |-----------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/plot_builder_welc.png`      | `docs/screenshots/plot_builder_main.png`        |
+| `docs/screenshots/rpmb_welcome.png`      | `docs/screenshots/plot_builder_main.png`        |
 
 | Match Search — Fenêtre principale               | Match Search — Fenêtre du Fit                 |
 |-----------------------------------------------|-------------------------------------------------|
