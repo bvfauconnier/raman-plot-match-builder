@@ -42,7 +42,7 @@ of the published analysis.
 
 | Welcome — main view                           | Plot Builder — main view                        |
 |-----------------------------------------------|-------------------------------------------------|
-| `docs/screenshots/rpmb_welcome.png`           | `docs/screenshots/plot_builder_main.png`        |
+| ![Welcome — main view](https://github.com/bvfauconnier/raman-plot-match-builder/blob/e231d0346c794be9ff0a99a384b5ffe36020a642/docs/screenshots/rpmb_welcome.png)`docs/screenshots/rpmb_welcome.png`           | `docs/screenshots/plot_builder_main.png`        |
 
 | Match Search — main view                      | Match Search — fit window                       |
 |-----------------------------------------------|-------------------------------------------------|
