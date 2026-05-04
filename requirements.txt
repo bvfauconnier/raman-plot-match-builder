@@ -1,0 +1,38 @@
+# ============================================================================
+# Raman Plot|Match Builder — runtime dependencies
+# ============================================================================
+# Tested with Python 3.10–3.12 on Windows 10/11.
+# Install all with: pip install -r requirements.txt
+# ============================================================================
+
+# --- Core scientific stack ---
+numpy>=1.24,<3.0
+matplotlib>=3.7,<4.0
+scipy>=1.10,<2.0
+
+# --- GUI (modern look) ---
+# Optional: app falls back to classic ttk if customtkinter is missing.
+customtkinter>=5.2,<6.0
+
+# --- Drag & drop support (optional) ---
+# Without this, the user must use File > Open instead of dragging files.
+tkinterdnd2>=0.3.0
+
+# --- File I/O ---
+# Excel multi-tab export (File > Export all tabs to Excel...)
+openpyxl>=3.1,<4.0
+
+# Image embedding in PDF reports
+Pillow>=10.0,<12.0
+
+# PDF report generation
+reportlab>=4.0,<5.0
+
+# --- Deep learning models (CDAE / CBRAE) ---
+# Optional: app runs without it, but CDAE / CBRAE preprocessing will be
+# disabled. Install only if you plan to use the deep-learning denoising
+# / baseline removal features.
+torch>=2.0,<3.0
+
+# --- Build tooling (uncomment if you plan to build a stand-alone .exe) ---
+# pyinstaller>=6.0,<7.0

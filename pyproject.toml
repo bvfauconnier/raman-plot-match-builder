@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "raman-plot-match-builder"
+version = "1.0.0"
+description = "Desktop application for Raman spectroscopy preprocessing, peak fitting and mineral identification against the RRUFF database"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+keywords = [
+    "raman",
+    "spectroscopy",
+    "mineralogy",
+    "astrobiology",
+    "mars-analog",
+    "rruff",
+    "peak-fitting",
+    "deep-learning",
+]
+authors = [
+    { name = "Basile-Vladimir Fauconnier", email = "bvfauconnier@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+dependencies = [
+    "numpy>=1.24,<3.0",
+    "matplotlib>=3.7,<4.0",
+    "scipy>=1.10,<2.0",
+    "customtkinter>=5.2,<6.0",
+    "openpyxl>=3.1,<4.0",
+    "Pillow>=10.0,<12.0",
+    "reportlab>=4.0,<5.0",
+]
+
+[project.optional-dependencies]
+dl = ["torch>=2.0,<3.0"]
+dnd = ["tkinterdnd2>=0.3.0"]
+build = ["pyinstaller>=6.0,<7.0"]
+test = ["pytest>=7.0", "pytest-cov>=4.0"]
+all = [
+    "torch>=2.0,<3.0",
+    "tkinterdnd2>=0.3.0",
+    "pyinstaller>=6.0,<7.0",
+]
+
+[project.urls]
+"Homepage"     = "https://github.com/bvfauconnier/raman-plot-match-builder"
+"Bug Tracker"  = "https://github.com/bvfauconnier/raman-plot-match-builder/issues"
+"Changelog"    = "https://github.com/bvfauconnier/raman-plot-match-builder/blob/main/CHANGELOG.md"
+"RRUFF"        = "https://rruff.info"
