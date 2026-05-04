@@ -326,7 +326,7 @@ Master's thesis in Astrobiology — Université de Sherbrooke (UdeS)
 - **Université de Liège (Uliège)** — Department of Astrophysics, Geophysics & Oceanography
 - **Université de Sherbrooke (UdeS)** — Department of Applied Geomatics — T-Mars Team
 - **Promoter** — Pr. Myriam Lemelin (UdeS) — Department of Applied Geomatics — T-Mars Team
-- **Co-Promoter** — Pr. Bernard Charlier (ULiège) — Département of Geology
+- **Co-Promoter** — Pr. Bernard Charlier (ULiège) — Department of Geology
 
 ---
 
