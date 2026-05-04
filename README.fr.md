@@ -69,7 +69,7 @@ reproductibilité de l'analyse publiée.
 
 ## 📄 Rapports PDF
 
-> *Exemple de rapport dans [`docs/Report PDF/`](docs/Reports/)
+> *Exemple de rapport dans [`docs/Reports/`](docs/Reports/)
 
 ---
 
