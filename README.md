@@ -311,8 +311,8 @@ See [`AI_USAGE.md`](AI_USAGE.md) for the full disclosure.
 ## 👤 Author
 
 **Ir. Basile-Vladimir Fauconnier**
-Master in Space Sciences — Université de Liège (ULiège)
-Master's thesis in Astrobiology — Université de Sherbrooke (UdeS)
+ - Master in Space Sciences — Université de Liège (ULiège)
+ - Master's thesis in Astrobiology — Université de Sherbrooke (UdeS)
 
 📧 [bvfauconnier@gmail.com](mailto:bvfauconnier@gmail.com)
 🐙 [github.com/bvfauconnier](https://github.com/bvfauconnier)
