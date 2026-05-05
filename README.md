@@ -337,6 +337,7 @@ See [`AI_USAGE.md`](AI_USAGE.md) for the full disclosure.
 - **Université de Sherbrooke (UdeS)** — Department of Applied Geomatics — T-Mars Team
 - **Promoter** — Pr. Myriam Lemelin (UdeS) — Department of Applied Geomatics — T-Mars Team
 - **Co-Promoter** — Pr. Bernard Charlier (ULiège) — Department of Geology
+- **Raman Expert** — Pr. Adelphine Bonneau (UdeS) — Department of Chemistry
 
 ---
 
