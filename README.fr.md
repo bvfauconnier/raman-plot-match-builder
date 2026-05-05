@@ -347,7 +347,7 @@ Voir [`AI_USAGE.md`](AI_USAGE.md) pour la divulgation complète.
 - **Université de Sherbrooke** — Département de Géomatiques Appliquées — Équipe T-Mars
 - **Promoteur** — Pr. Myriam Lemelin (UdeS) — Département de Géomatiques Appliquées — Équipe T-Mars
 - **Co-Promoteur** — Pr. Bernard Charlier (ULiège) — Département de Géologie
-- **Raman Expert** — Pr. Adelphine Bonneau (UdeS) — Department of Chemistry
+- **Experte Raman** — Pr. Adelphine Bonneau (UdeS) — Département de Chimie
 
 ---
 
