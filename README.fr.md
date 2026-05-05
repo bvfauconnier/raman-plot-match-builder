@@ -120,7 +120,7 @@ doit fournir lui-même.
 │       ├── spec0001.txt
 │       └── ...
 │
-├── Raw_Spectrum/              ← spectres à prétraiter (Match Search)
+├── RAW_SPECTRUM/              ← spectres à prétraiter (Match Search)
 │   └── <session_ou_sample>/
 │       ├── spec0001.txt
 │       └── ...
@@ -165,7 +165,7 @@ Tu dois te les procurer séparément :
 
 ### Format des fichiers de spectres
 
-Tous les fichiers de spectres (dans `SAMPLES/`, `Raw_Spectrum/` et
+Tous les fichiers de spectres (dans `SAMPLES/`, `RAW_SPECTRUM/` et
 `DATABASE_RRUFF/`) doivent être en ASCII 2 colonnes :
 
 ```
@@ -230,7 +230,7 @@ raman-plot-match-builder/
 ```
 
 > Note : les dossiers d'exécution (`SAMPLES/`, `MODELS/`,
-> `DATABASE_RRUFF/`, `PROJETS/`, `SAUVEGARDE/`, `Raw_Spectrum/`) ne font
+> `DATABASE_RRUFF/`, `PROJETS/`, `SAUVEGARDE/`, `RAW_SPECTRUM/`) ne font
 > **pas** partie de ce dépôt source. Ils sont créés ou attendus sur la
 > machine de l'utilisateur à la racine de l'application (voir
 > [Arborescence d'exécution requise](#-arborescence-dexécution-requise)
