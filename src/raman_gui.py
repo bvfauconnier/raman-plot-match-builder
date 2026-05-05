@@ -5259,8 +5259,8 @@ def baseline_asls(y, lam=1e6, p=0.01, niter=100):
     from scipy.sparse.linalg import spsolve
     y = np.asarray(y, dtype=float)
     L = len(y)
-    D = diags([1, -2, 1], [0, -1, -2], shape=(L, L - 2))
-    D = lam * D.dot(D.transpose())
+    D = diags([1, -2, 1], [0, 1, 2], shape=(L - 2, L))
+    D = lam * (D.T @ D)
     w = np.ones(L)
     z = y.copy()
     for _ in range(niter):
