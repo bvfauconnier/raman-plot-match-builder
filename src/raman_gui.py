@@ -5287,8 +5287,9 @@ def baseline_snip(y, niter=24, decreasing=True):
     Retourne la baseline.
     """
     y = np.asarray(y, dtype=float).copy()
-    # Transformation LLS (Log-Log-Sqrt) pour stabiliser
-    z = np.log(np.log(np.sqrt(y - y.min() + 1) + 1) + 1)
+    y_shift = y - y.min()
+    # Transformation LLS (Log1p-Log1p-Sqrt) pour stabiliser
+    z = np.log1p(np.log1p(np.sqrt(y_shift + 1)))
     iters = range(niter, 0, -1) if decreasing else range(1, niter + 1)
     for w in iters:
         z_new = z.copy()
@@ -5298,7 +5299,7 @@ def baseline_snip(y, niter=24, decreasing=True):
                 z_new[i] = avg
         z = z_new
     # Inverse de la transformation LLS
-    baseline = (np.exp(np.exp(z) - 1) - 1) ** 2 - 1 + y.min()
+    baseline = (np.expm1(np.expm1(z)))**2 - 1 + y.min()
     return baseline
 
 
