@@ -62,7 +62,7 @@ BUNDLED_DATA: list[tuple[str, str]] = [
 # Each gets a small README.txt explaining its purpose to the end user.
 RUNTIME_DIRS: list[str] = [
     "SAMPLES",
-    "Raw_Spectrum",
+    "RAW_SPECTRUM",
     "DATABASE_RRUFF",
     "MODELS",
     "PROJETS",
@@ -117,8 +117,8 @@ RUNTIME_READMES: dict[str, str] = {
 """,
 
     # ------------------------------------------------------------------------
-    "Raw_Spectrum": """\
-# Raw_Spectrum/
+    "RAW_SPECTRUM": """\
+# RAW_SPECTRUM/
 
 🇫🇷  Place ici les spectres BRUTS à pré-traiter avec « Match Search »
     (débruitage CDAE, baseline CBRAE/AsLS/Polynomial/SNIP, fit des pics,
@@ -127,7 +127,7 @@ RUNTIME_READMES: dict[str, str] = {
     L'arborescence est libre — tu peux organiser par sample, par session,
     par date :
 
-        Raw_Spectrum/
+        RAW_SPECTRUM/
         ├── CR-G3-05/
         │   └── 22042026/
         │       ├── spec0001.txt
@@ -143,7 +143,7 @@ RUNTIME_READMES: dict[str, str] = {
 
     Free folder layout — organize by sample, session, or date:
 
-        Raw_Spectrum/
+        RAW_SPECTRUM/
         ├── CR-G3-05/
         │   └── 22042026/
         │       ├── spec0001.txt
@@ -165,17 +165,13 @@ RUNTIME_READMES: dict[str, str] = {
 
         https://rruff.info/zipped_data_files/raman/
 
-    Décompresse l'archive et organise les fichiers en sous-dossiers PAR
-    MINÉRAL, en suivant la convention « NomMineral_Rxxxxxx.txt » :
+    Décompresse l'archive et vérifie si les fichiers suivent la convention « NomMineral_Rxxxxxx.txt » :
 
         DATABASE_RRUFF/
-        ├── Anatase/
-        │   ├── Anatase__R070582.txt
-        │   ├── Anatase__R060277.txt
-        │   └── ...
-        ├── Hematite/
-        │   └── ...
-        └── ...
+        ├── <Référence_dossier>/
+        │    ├── NomMinéral_Rxxxxxx.txt
+	│    └── ...
+	└── ...
 
     L'application scanne automatiquement la structure au démarrage.
 
@@ -189,22 +185,19 @@ RUNTIME_READMES: dict[str, str] = {
 
         https://rruff.info/zipped_data_files/raman/
 
-    Unzip the archive and organize the files in PER-MINERAL subfolders,
-    following the “MineralName_Rxxxxxx.txt” naming convention:
+    Unzip the archive and verify if files follow the “MineralName_Rxxxxxx.txt” naming convention:
 
         DATABASE_RRUFF/
-        ├── Anatase/
-        │   ├── Anatase__R070582.txt
-        │   ├── Anatase__R060277.txt
-        │   └── ...
-        ├── Hematite/
-        │   └── ...
-        └── ...
+        ├── <Référence_dossier>/
+        │    ├── MineralName_Rxxxxxx.txt
+	│    └── ...
+	└── ...
 
     The application scans the folder structure automatically at startup.
 
     ⚠ The RRUFF database is NOT distributed with the application: it is
     licensed CC-BY and belongs to the RRUFF Project.
+
 """,
 
     # ------------------------------------------------------------------------
@@ -219,7 +212,7 @@ RUNTIME_READMES: dict[str, str] = {
         └── cbrae_best.pth     ← Convolutional Baseline Removal AE
 
     Ces fichiers sont publiés dans l'archive de la thèse de master
-    associée (Zenodo — lien à venir).
+    associée (MatheO — lien à venir).
 
     Sans ces fichiers, l'application fonctionne quand même : les modules
     CDAE / CBRAE seront simplement désactivés. Les algorithmes classiques
@@ -233,7 +226,7 @@ RUNTIME_READMES: dict[str, str] = {
         └── cbrae_best.pth     ← Convolutional Baseline Removal AE
 
     These files are published in the companion master's thesis archive
-    (Zenodo — link forthcoming).
+    (MatheO — link forthcoming).
 
     Without them, the application still runs: the CDAE / CBRAE buttons
     are simply disabled. The classical AsLS, Polynomial and SNIP
@@ -258,7 +251,7 @@ RUNTIME_READMES: dict[str, str] = {
 
     Tu peux copier librement ces fichiers entre machines : ils sont
     autonomes (les chemins de spectres sont relatifs au dossier
-    Raw_Spectrum/ ou SAMPLES/ correspondant).
+    RAW_SPECTRUM/ ou SAMPLES/ correspondant).
 
 🇬🇧  This folder AUTOMATICALLY receives the projects you save from the
     application:
@@ -273,7 +266,7 @@ RUNTIME_READMES: dict[str, str] = {
 
     You can freely copy these files between machines: they are
     self-contained (spectrum paths are relative to the corresponding
-    Raw_Spectrum/ or SAMPLES/ folder).
+    RAW_SPECTRUM/ or SAMPLES/ folder).
 """,
 
     # ------------------------------------------------------------------------
