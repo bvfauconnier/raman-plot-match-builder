@@ -14,6 +14,8 @@
 🇬🇧 **An English version of this README is available**:
 [README.md](README.md)
 
+.exe **Un lien de téléchargement pour le fichier exécutable est disponible ici** : [Lien Google Drive : RamanPlotMatchBuilder_WINDOWS_1.0_setup.exe](https://drive.google.com/file/d/1WPwhjbWbmWD0wefJkzVgqlNX9-PgdRiI/view?usp=drive_link)
+
 ---
 
 ## ✨ Présentation
