@@ -32,7 +32,7 @@ located next to `raman_gui.py` (or next to the bundled `.exe`)**:
 | Folder              | Provided by  | Role                                                                       |
 |---------------------|--------------|----------------------------------------------------------------------------|
 | `SAMPLES/`          | user         | experimental spectra, browsed by Plot Builder                              |
-| `Raw_Spectrum/`     | user         | raw spectra to preprocess, browsed by Match Search                         |
+| `RAW_SPECTRUM/`     | user         | raw spectra to preprocess, browsed by Match Search                         |
 | `DATABASE_RRUFF/`   | user         | RRUFF reference library (per-mineral subfolders)                           |
 | `MODELS/`           | user         | PyTorch checkpoints `cdae_best.pth` and `cbrae_best.pth`                   |
 | `PROJETS/`          | auto-created | saved projects (`PlotBuilder/*.rpm` and `MatchSearch/*.rms`)               |
@@ -42,7 +42,7 @@ The folder names are defined as constants at the top of `raman_gui.py`:
 
 ```python
 SUBDIR_SAMPLES        = "SAMPLES"
-SUBDIR_RAW_SPECTRUM   = "Raw_Spectrum"
+SUBDIR_RAW_SPECTRUM   = "RAW_SPECTRUM"
 SUBDIR_RRUFF          = "DATABASE_RRUFF"
 SUBDIR_MODELS         = "MODELS"
 SUBDIR_PROJETS        = "PROJETS"
