@@ -118,7 +118,7 @@ which contain assets the user must provide themselves.
 │       ├── spec0001.txt
 │       └── ...
 │
-├── Raw_Spectrum/              ← spectra to preprocess (Match Search)
+├── RAW_SPECTRUM/              ← spectra to preprocess (Match Search)
 │   └── <session_or_sample>/
 │       ├── spec0001.txt
 │       └── ...
@@ -162,7 +162,7 @@ need to obtain them separately:
 
 ### Spectrum file format
 
-All spectrum files (in `SAMPLES/`, `Raw_Spectrum/`, and `DATABASE_RRUFF/`)
+All spectrum files (in `SAMPLES/`, `RAW_SPECTRUM/`, and `DATABASE_RRUFF/`)
 must be 2-column ASCII:
 
 ```
@@ -227,7 +227,7 @@ raman-plot-match-builder/
 ```
 
 > Note: the runtime folders (`SAMPLES/`, `MODELS/`, `DATABASE_RRUFF/`,
-> `PROJETS/`, `SAUVEGARDE/`, `Raw_Spectrum/`) are **not** part of this
+> `PROJETS/`, `SAUVEGARDE/`, `RAW_SPECTRUM/`) are **not** part of this
 > source repository. They are created or expected on the user's machine
 > at the application root (see [Required runtime folder layout](#-required-runtime-folder-layout) above).
 
