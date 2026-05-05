@@ -89,7 +89,7 @@ python src/raman_gui.py
 
 ### Exécutable autonome (Windows)
 
-Un `.exe` pré-compilé sera attaché à chaque release taggée sur la page
+Un `.exe` précompilé sera attaché à chaque release taguée sur la page
 **Releases** (lorsque le dépôt deviendra public).
 
 Pour le construire toi-même :
@@ -161,7 +161,7 @@ Tu dois te les procurer séparément :
   Polynomial, SNIP) restent pleinement fonctionnels.
 
 - **`DATABASE_RRUFF/`** — télécharge le sous-ensemble "Excellent peaks"
-  depuis [https://rruff.info/zipped_data_files/raman/](https://rruff.info/zipped_data_files/raman/), décompresse les.
+  depuis [https://rruff.info/zipped_data_files/raman/](https://rruff.info/zipped_data_files/raman/), décompresse-les.
 
 ### Format des fichiers de spectres
 
