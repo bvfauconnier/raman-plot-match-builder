@@ -1678,8 +1678,30 @@ def _make_scrollable_frame(parent):
                 delta = -1
             elif event.num == 5:
                 delta = 1
-        if delta:
-            canvas.yview_scroll(delta, 'units')
+        if not delta:
+            return
+        # Si le curseur est au-dessus (ou imbriqué dans) un widget
+        # scrollable interne (Treeview, Listbox, Text), c'est CE widget
+        # qui doit scroller — pas le canvas externe. Sinon les longues
+        # listes/tableaux deviennent inutilisables : un cran de molette
+        # fait défiler la fenêtre entière.
+        try:
+            widget = canvas.winfo_containing(event.x_root, event.y_root)
+        except (tk.TclError, AttributeError):
+            widget = None
+        w = widget
+        while w is not None and w is not canvas:
+            if isinstance(w, (tk.Listbox, tk.Text, ttk.Treeview)):
+                try:
+                    w.yview_scroll(delta, 'units')
+                except tk.TclError:
+                    pass
+                return 'break'
+            try:
+                w = w.master
+            except AttributeError:
+                break
+        canvas.yview_scroll(delta, 'units')
     outer.bind('<Enter>', _bind_wheel)
     outer.bind('<Leave>', _unbind_wheel)
 
@@ -14150,8 +14172,13 @@ class RamanMatchSearchGUI(_BASE_TK):
                justify='left').pack(anchor='w', pady=(0, 8))
 
         # Listbox des courbes avec scrollbar
+        # exportselection=False : sinon, dès que l'utilisateur clique
+        # dans le champ "Nom du fit" (qui prend la X selection),
+        # la Listbox perd sa sélection — la courbe choisie disparaît
+        # silencieusement et "Créer" affiche "choisir une courbe".
         lb_frm = _Frame(frm); lb_frm.pack(fill=tk.BOTH, expand=True, pady=4)
-        lb = tk.Listbox(lb_frm, height=10, font=('TkDefaultFont', 10))
+        lb = tk.Listbox(lb_frm, height=10, font=('TkDefaultFont', 10),
+                         exportselection=False)
         lb.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         sb = ttk.Scrollbar(lb_frm, orient='vertical', command=lb.yview)
         sb.pack(side=tk.RIGHT, fill=tk.Y)
@@ -14182,7 +14209,21 @@ class RamanMatchSearchGUI(_BASE_TK):
         name_entry = _Entry(name_row, textvariable=name_var, width=36)
         name_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
+        # On garde trace du dernier nom "auto" qu'on a injecté pour
+        # pouvoir distinguer une frappe utilisateur d'un set programmatique.
+        # Dès que name_var diffère de _last_default, c'est que l'utilisateur
+        # a tapé : on bloque l'écrasement automatique sur changement de
+        # courbe (sinon le nom personnalisé revient au défaut).
+        _name_state = {'last_default': '', 'user_edited': False}
+
+        def _on_name_var_write(*_args):
+            if name_var.get() != _name_state['last_default']:
+                _name_state['user_edited'] = True
+        name_var.trace_add('write', _on_name_var_write)
+
         def _update_default_name(*_args):
+            if _name_state['user_edited']:
+                return  # l'utilisateur a un nom custom, on ne touche pas
             sel = lb.curselection()
             if not sel:
                 return
@@ -14190,7 +14231,9 @@ class RamanMatchSearchGUI(_BASE_TK):
             label = c['label']
             if c.get('history'):
                 label = f"{label} {c['history']}"
-            name_var.set(f"Pics — {label}")
+            new_default = f"Pics — {label}"
+            _name_state['last_default'] = new_default
+            name_var.set(new_default)
 
         lb.bind('<<ListboxSelect>>', _update_default_name)
         _update_default_name()
